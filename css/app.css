@@ -81,7 +81,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   overscroll-behavior: none;
-  background: var(--outer);
+  background: var(--elev); /* samme farve som bundmenuen, hvis der skulle være en kant */
 }
 
 body {
@@ -122,9 +122,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ------------------------------------------------------------ App-skal */
 
 .app {
-  position: relative;
-  height: 100%;
-  height: 100dvh;
+  /* Fast i hele vinduet – 100dvh er for lav i iOS-hjemmeskærmsapps og gav en sort bjælke i bunden */
+  position: fixed;
+  inset: 0;
   max-width: 480px;
   margin: 0 auto;
   display: grid;
