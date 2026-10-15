@@ -519,6 +519,34 @@ function renderNow() {
   return `${html}</section>`;
 }
 
+/* ----------------------------------------------------------------- Tema */
+
+const THEME_KEY = 'illusions2026.theme';
+const THEMES = [
+  ['auto', 'Automatisk', 'linear-gradient(135deg, #120b1c 50%, #f7f3fb 50%)'],
+  ['dark', 'Aubergine', 'radial-gradient(circle at 70% 30%, #e8c26a 0 22%, #211634 24%)'],
+  ['light', 'Lys', 'radial-gradient(circle at 70% 30%, #7a5200 0 22%, #f1ebf8 24%)'],
+  ['midnat', 'Midnat', 'radial-gradient(circle at 70% 30%, #8fd3ff 0 22%, #142038 24%)'],
+  ['rubin', 'Rubin', 'radial-gradient(circle at 70% 30%, #f0c76e 0 22%, #3a1822 24%)'],
+  ['smaragd', 'Smaragd', 'radial-gradient(circle at 70% 30%, #e9c46a 0 22%, #153026 24%)'],
+  ['kontrast', 'Høj kontrast', 'radial-gradient(circle at 70% 30%, #ffd400 0 22%, #000 24%)'],
+];
+let theme = 'auto';
+try { theme = localStorage.getItem(THEME_KEY) || 'auto'; } catch { /* ignore */ }
+
+function applyTheme(t) {
+  theme = THEMES.some(([id]) => id === t) ? t : 'auto';
+  if (theme === 'auto') delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme;
+  try { localStorage.setItem(THEME_KEY, theme); } catch { /* ignore */ }
+  const hb = getComputedStyle(document.documentElement).getPropertyValue('--h-bg').trim();
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hb || '#160d24');
+}
+
+function themesHtml() {
+  return `<div class="themes" role="group" aria-label="Tema">${THEMES.map(([id, name, sw]) => `<button type="button" class="theme-opt" data-theme-pick="${id}" aria-pressed="${theme === id}"><span class="swatch" style="background:${sw}" aria-hidden="true"></span><span>${name}</span></button>`).join('')}</div>`;
+}
+
 /* ----------------------------------------------------------------- Info */
 
 let deferredInstall = null;
@@ -550,6 +578,8 @@ function renderInfo() {
     return `<article class="menu"><h2>${esc(m.titel)}</h2>${meta}${m.intro ? `<p class="menu-intro">${esc(m.intro)}</p>` : ''}${bullets(m.retter)}</article>`;
   }).join('');
   parts.push(accordion('mad', 'Mad og drikke', 'sparkle', `${menus}<div class="d-note">${icon('info')}<div>${DATA.madNoter.map((t) => `<p>${esc(t)}</p>`).join('')}<p><a href="mailto:tryl@pegani.dk?subject=${encodeURIComponent('Allergier – ILLUSIONS 2026')}">Skriv om allergier</a></p></div></div>`));
+
+  parts.push(accordion('tema', 'Tema', 'sparkle', `<p>Vælg farvetema. Automatisk følger telefonens lyse/mørke tilstand.</p>${themesHtml()}`));
 
   const icons = { butik: 'door', kaffe: 'sparkle', del: 'share' };
   for (const sec of rest) parts.push(accordion(sec.id, sec.titel, icons[sec.id] || 'info', bullets(sec.punkter)));
@@ -875,6 +905,12 @@ async function shareAct(a) {
 /* --------------------------------------------------------------- Events */
 
 document.addEventListener('click', (e) => {
+  const pick = e.target.closest('[data-theme-pick]');
+  if (pick) {
+    applyTheme(pick.dataset.themePick);
+    document.querySelectorAll('[data-theme-pick]').forEach((el) => el.setAttribute('aria-pressed', el.dataset.themePick === theme));
+    return;
+  }
   const t = e.target.closest('[data-maps],[data-open],[data-star],[data-tab],[data-day],[data-act],[data-ics],[data-share],[data-chip],[data-f-adgang],[data-f-maal],[data-f-sted]');
   if (!t) return;
   const d = t.dataset;
@@ -1080,6 +1116,7 @@ function init() {
   }
   try { history.replaceState(null, '', `#${state.tab}`); } catch { /* ignore */ }
   updateOnline();
+  applyTheme(theme);
   render({ scroll: 'auto' });
   if (openId) openActivity(openId);
   scheduleTick();
