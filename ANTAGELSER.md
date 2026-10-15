@@ -50,6 +50,6 @@ Disse tre aktiviteter vises med "Tjek ved indtjekning" og grå markering. Målgr
 
 - Kravene `user-scalable=no` og `maximum-scale=1` koster point i Lighthouse Accessibility (93 i stedet for 100). iOS ignorerer `user-scalable=no`, så knibe-zoom blokeres også med JavaScript.
 - Lighthouse 12+ har ingen PWA-kategori. PWA er målt med Lighthouse 11.7.1.
-- Topbjælken er mørk i begge tilstande, fordi iPhone-statusbjælken (`black-translucent`) altid har hvid tekst.
+- Topbjælken er mørk i begge tilstande, fordi iPhone-statusbjælken er sort med hvid tekst (`black`). `black-translucent` gav en død stribe i bunden på nyere iPhones.
 - Kalenderfilen (.ics) bruger tidszonen Europe/Copenhagen og har en påmindelse 15 minutter før. På iPhone hentes filen først, og så trykker man på den for at føje den til Kalender.
 - Når der er net, tjekkes programdata i baggrunden, og der vises en besked, hvis `data.js` er ændret. App-filerne opdateres, når `VERSION` i `sw.js` hæves.
