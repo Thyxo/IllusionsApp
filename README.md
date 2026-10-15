@@ -1,5 +1,7 @@
 # ILLUSIONS 2026 – festivalapp
 
+**Live:** https://illusionsapp.vercel.app
+
 Installérbar PWA med programmet for ILLUSIONS 2026 i Horsens (torsdag 15. til søndag 18. oktober 2026). Ren HTML, CSS og JavaScript (ES-moduler) uden build-trin og uden backend. Appen virker offline efter første besøg.
 
 **Funktioner:** kalender og liste pr. dag, "Hele dagen", mit program med overlap- og gåtidsadvarsler, nu og næste, filtre og søgning, detaljer i et bundark (Google Maps, rute, .ics, del), praktisk info og menuer, lys og mørk tilstand.
