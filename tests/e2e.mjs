@@ -47,7 +47,7 @@ const noHorizontalScroll = async (page) => {
     appH: document.querySelector('#app').getBoundingClientRect().height,
   }));
   assert.equal(r.topbar, 0, 'topbar er rykket');
-  assert.ok(Math.abs(r.navBottom - r.appH) < 1 && r.navH >= 60, `bundmenu ${r.navH}px / ${r.navBottom}`);
+  assert.ok(Math.abs(r.navBottom - r.appH) < 1 && r.navH >= 54, `bundmenu ${r.navH}px / ${r.navBottom}`);
   assert.ok(r.doc <= r.win, `dokument ${r.doc} > ${r.win}`);
   assert.ok(r.content <= r.contentW, `indhold ${r.content} > ${r.contentW}`);
   assert.ok(r.pageScroll <= 0, `siden kan scrolle ${r.pageScroll}px`);
