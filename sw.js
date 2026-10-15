@@ -1,6 +1,6 @@
 // Service worker: cache-first for alle app-filer, så appen virker offline.
 // Hæv VERSION ved hver udgivelse – så hentes en ny, versioneret cache.
-const VERSION = '2026-10-15.4';
+const VERSION = '2026-10-15.5';
 const CACHE = `illusions-${VERSION}`;
 const DATA_URL = new URL('data.js', self.registration.scope).href;
 

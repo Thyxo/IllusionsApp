@@ -185,7 +185,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   inset: 0;
   max-width: 480px;
   margin: 0 auto;
-  height: 100%;
+  /* iOS-hjemmeskærmsapps rapporterer et for lavt vindue; --app-h sættes til skærmhøjden i index.html */
+  height: var(--app-h, 100%);
   display: flex;
   flex-direction: column;
   background: var(--bg);
@@ -358,7 +359,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   /* Lad menuen gå tæt ned mod hjemmebjælken (kun en lille margen tilbage) */
-  padding-bottom: max(2px, calc(env(safe-area-inset-bottom) - 22px));
+  padding-bottom: max(4px, calc(env(safe-area-inset-bottom) - 12px));
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
   background: var(--elev);

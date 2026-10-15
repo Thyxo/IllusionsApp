@@ -16,7 +16,22 @@
   <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-  <script>try{var t=localStorage.getItem('illusions2026.theme');if(t&&t!=='auto')document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <script>
+    try { var t = localStorage.getItem('illusions2026.theme'); if (t && t !== 'auto') document.documentElement.dataset.theme = t; } catch (e) {}
+    // iPhone/iPad som hjemmeskærmsapp: vinduet rapporteres for lavt, så appen fylder hele skærmen
+    (function () {
+      var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var standalone = navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+      if (!ios || !standalone) return;
+      function fit() {
+        var h = Math.max(window.innerHeight, Math.max(screen.height, screen.width) > 0 && innerWidth < innerHeight ? Math.max(screen.height, screen.width) : innerHeight);
+        document.documentElement.style.setProperty('--app-h', h + 'px');
+      }
+      fit();
+      addEventListener('resize', fit);
+      addEventListener('orientationchange', fit);
+    })();
+  </script>
   <link rel="stylesheet" href="css/app.css">
   <link rel="modulepreload" href="data.js">
   <link rel="modulepreload" href="js/time.js">
